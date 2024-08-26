@@ -2,7 +2,7 @@
 
 import textwrap
 from functools import partial
-from typing import Any, Callable, Optional, TypeVar, Union, cast
+from typing import Any, Callable, Optional, TypeVar, Union, cast, overload
 
 import yaml
 
@@ -19,6 +19,26 @@ DOCDATA_DUNDER = "__docdata__"
 def get_docdata(obj: X) -> Any:
     """Get the docdata if it is available."""
     return getattr(obj, DOCDATA_DUNDER, None)
+
+
+# docstr-coverage:inherited
+@overload
+def parse_docdata(
+    obj: None,
+    *,
+    delimiter: str,
+    formatter: Optional[Callable[[Any], str]] = None,
+) -> Callable[[X], X]: ...
+
+
+# docstr-coverage:inherited
+@overload
+def parse_docdata(
+    obj: X,
+    *,
+    delimiter: str,
+    formatter: Optional[Callable[[Any], str]] = None,
+) -> X: ...
 
 
 def parse_docdata(
