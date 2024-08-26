@@ -42,20 +42,20 @@ from docdata import parse_docdata, get_docdata
 
 @parse_docdata
 class MyClass:
-    """This is my class.
+   """This is my class.
 
-    ---
-    author: Charlie
-    motto:
-    - docs
-    - are
-    - cool
-    """
+   ---
+   author: Charlie
+   motto:
+   - docs
+   - are
+   - cool
+   """
 
 
 assert get_docdata(MyClass) == {
-    'author': 'Charlie',
-    'motto': ['docs', 'are', 'cool'],
+   "author": "Charlie",
+   "motto": ["docs", "are", "cool"],
 }
 ```
 
@@ -66,7 +66,7 @@ like changing the delimiter, use keyword arguments like in:
 from docdata import parse_docdata, get_docdata
 
 
-@parse_docdata(delimiter='****')
+@parse_docdata(delimiter="****")
 class MyClass:
     """This is my class.
 
@@ -80,8 +80,8 @@ class MyClass:
 
 
 assert get_docdata(MyClass) == {
-    'author': 'Charlie',
-    'motto': ['docs', 'are', 'cool'],
+    "author": "Charlie",
+    "motto": ["docs", "are", "cool"],
 }
 ```
 
