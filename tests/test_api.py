@@ -175,7 +175,7 @@ class TestParse(unittest.TestCase):
     def test_formatter(self) -> None:
         """Test the formatter."""
 
-        def formatter(data):
+        def formatter(data: dict[str, Any]) -> str:
             """Format the data."""
             return f"\n\n{data['name']} is rated {data['rating']}"
 
