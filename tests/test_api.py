@@ -1,6 +1,7 @@
 """Test the docdata parser."""
 
 import unittest
+from typing import Any
 
 from docdata import get_docdata, parse_docdata
 from docdata.api import _strip_trailing_lines
@@ -9,7 +10,7 @@ from docdata.api import _strip_trailing_lines
 class TestUtils(unittest.TestCase):
     """Test utilities."""
 
-    def test_strip_trailing_lines(self):
+    def test_strip_trailing_lines(self) -> None:
         """Test stripping trailing lines."""
         for expected, actual in [
             ([], []),
@@ -34,7 +35,7 @@ class D:
     :param args: Nope.
     """
 
-    def __init__(self, *args):
+    def __init__(self, *args: Any) -> None:
         """Initialize the class with dummy args."""
         self.args = args
 
@@ -51,7 +52,7 @@ class C3:
     name: A
     """
 
-    def __init__(self, *args):
+    def __init__(self, *args: Any) -> None:
         """Initialize the class with dummy args."""
         self.args = args
 
@@ -66,7 +67,7 @@ class C2:
     name: A
     """
 
-    def __init__(self, *args):
+    def __init__(self, *args: Any) -> None:
         """Initialize the class with dummy args."""
         self.args = args
 
@@ -80,7 +81,7 @@ class C1:
     name: A
     """
 
-    def __init__(self, *args):
+    def __init__(self, *args: Any) -> None:
         """Initialize the class with dummy args."""
         self.args = args
 
@@ -88,12 +89,12 @@ class C1:
 class TestParse(unittest.TestCase):
     """Test parsing docdata."""
 
-    def _help(self, a, b):
+    def _help(self, a: Any, b: Any) -> None:
         self.assertEqual(a.__doc__.rstrip(), b.__doc__.rstrip())
         self.assertIsNone(get_docdata(b))
         self.assertEqual({"name": "A"}, get_docdata(a))
 
-    def test_parse_no_params_no_newline(self):
+    def test_parse_no_params_no_newline(self) -> None:
         """Test parsing docdata with no params, and no trailing space.."""
 
         @parse_docdata
@@ -105,7 +106,7 @@ class TestParse(unittest.TestCase):
 
         self._help(A, B)
 
-    def test_parse_no_params_one_newline(self):
+    def test_parse_no_params_one_newline(self) -> None:
         """Test parsing docdata with no params, and a newline before the delimiter."""
 
         @parse_docdata
@@ -118,7 +119,7 @@ class TestParse(unittest.TestCase):
 
         self._help(A, B)
 
-    def test_parse_no_params_one_newline_functional(self):
+    def test_parse_no_params_one_newline_functional(self) -> None:
         """Test parsing docdata with no params, and a newline before the delimiter."""
 
         @parse_docdata()
@@ -131,7 +132,7 @@ class TestParse(unittest.TestCase):
 
         self._help(A, B)
 
-    def test_parse_no_params_one_newline_alt_delimiter(self):
+    def test_parse_no_params_one_newline_alt_delimiter(self) -> None:
         """Test parsing docdata with no params, and a newline before the delimiter."""
 
         @parse_docdata(delimiter="****")
@@ -144,7 +145,7 @@ class TestParse(unittest.TestCase):
 
         self._help(A, B)
 
-    def test_parse_no_params_many_newline(self):
+    def test_parse_no_params_many_newline(self) -> None:
         """Test parsing docdata with no params, and a newline before the delimiter."""
 
         @parse_docdata
@@ -159,24 +160,24 @@ class TestParse(unittest.TestCase):
 
         self._help(A, B)
 
-    def test_parse_with_params_no_newline(self):
+    def test_parse_with_params_no_newline(self) -> None:
         """Test parsing docdata."""
         self._help(C1, D)
 
-    def test_parse_with_params_one_newline(self):
+    def test_parse_with_params_one_newline(self) -> None:
         """Test parsing docdata."""
         self._help(C2, D)
 
-    def test_parse_with_params_many_newline(self):
+    def test_parse_with_params_many_newline(self) -> None:
         """Test parsing docdata."""
         self._help(C3, D)
 
-    def test_formatter(self):
+    def test_formatter(self) -> None:
         """Test the formatter."""
 
-        def formatter(data):
+        def formatter(data: dict[str, Any]) -> str:
             """Format the data."""
-            return f'\n\n{data["name"]} is rated {data["rating"]}'
+            return f"\n\n{data['name']} is rated {data['rating']}"
 
         @parse_docdata(delimiter="****", formatter=formatter)
         class A:
